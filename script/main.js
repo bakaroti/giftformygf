@@ -22,6 +22,8 @@ window.addEventListener('load', () => {
 });
 
 
+
+
 // animation timeline
 const animationTimeline = () => {
     // split chars that needs to be animated individually
