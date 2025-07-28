@@ -281,7 +281,7 @@ html, body {
   }
 
   .four .text-box {
-    background-color: #fffbf3;
+    background-color: #fffbf300;
     border: none;
     border-radius: 10px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
@@ -434,4 +434,172 @@ html, body {
   }
 }
 
+.four {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
+.content-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 1.5rem;
+}
+
+.iphone-preview {
+  width: 100%;
+  max-width: 414px;
+  transform: scale(0.68);
+  transform-origin: top center;
+}
+
+.iphone-xr-frame {
+  width: 414px;
+  height: 896px;
+  background: #ece5dd;
+  border: 14px solid #000;
+  border-radius: 40px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+.notch {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000;
+  width: 210px;
+  height: 30px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  z-index: 10;
+}
+
+.wa-screen {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.wa-header {
+  display: flex;
+  align-items: center;
+  background-color: #075e54;
+  padding: 14px;
+  color: #fff;
+}
+
+.wa-back {
+  font-size: 1.5rem;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.wa-dp {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.wa-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.wa-name {
+  font-weight: bold;
+}
+
+.wa-status {
+  font-size: 0.75rem;
+  color: #d0f0e0;
+}
+
+.wa-chat-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.text-box {
+  background-color: #ece5dd;
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.chat-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 0.5rem;
+  max-width: 100%;
+}
+
+.hbd-chatbox {
+  background-color: #dcf8c6;
+  padding: 0.7rem 1rem;
+  border-radius: 0 12px 12px 12px;
+  box-shadow: 0 1px 0.5px rgba(0,0,0,0.1);
+  font-size: 0.95rem;
+  color: #111;
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  word-break: break-word;
+  max-width: 85%;
+  flex: 1;
+}
+
+.msg-time {
+  font-size: 0.75rem;
+  color: gray;
+  display: block;
+  text-align: right;
+  margin-top: 4px;
+}
+
+.fake-btn {
+  background-color: #25D366;
+  color: white;
+  font-weight: bold;
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.love-fireworks-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.love-particle {
+  position: absolute;
+  font-size: 20px;
+  animation: explode 1s ease-out forwards;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes explode {
+  0% {
+    opacity: 1;
+    transform: scale(1) translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5) translate(var(--dx), var(--dy));
+  }
+}

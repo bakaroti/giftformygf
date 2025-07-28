@@ -2,24 +2,35 @@
 window.addEventListener('load', () => {
   Swal.fire({
     title: 'Mau denger musiknya di latar belakang?',
-    imageUrl: 'https://cdn-icons-png.flaticon.com/512/833/833472.png', // ikon hati PNG
+    imageUrl: 'https://cdn-icons-png.flaticon.com/512/833/833472.png',
     imageWidth: 60,
     imageHeight: 60,
     imageAlt: 'Love icon',
     showCancelButton: true,
     confirmButtonColor: '#e91e63',
     cancelButtonColor: '#9e9e9e',
-    confirmButtonText: 'Putar Musik ',
+    confirmButtonText: 'Putar Musik',
     cancelButtonText: 'Tanpa Musik',
   }).then((result) => {
+    // >>> MASUKIN FULLSCREEN DI SINI
+    const el = document.documentElement;
+    if (el.requestFullscreen) {
+      el.requestFullscreen();
+    } else if (el.webkitRequestFullscreen) {
+      el.webkitRequestFullscreen();
+    } else if (el.msRequestFullscreen) {
+      el.msRequestFullscreen();
+    }
+
+    // >>> JALANKAN MUSIK & ANIMASI
     if (result.isConfirmed) {
       document.querySelector('.song').play();
-      animationTimeline();
-    } else {
-      animationTimeline();
     }
+
+    animationTimeline();
   });
 });
+
 
 
 
@@ -245,16 +256,20 @@ const animationTimeline = () => {
         "party"
     )
     .staggerTo(
-        ".eight svg",
-        1.5, {
-            visibility: "visible",
-            opacity: 0,
-            scale: 80,
-            repeat: 3,
-            repeatDelay: 1.4,
-        },
-        0.3
-    )
+  ".eight svg",
+  1.5,
+  {
+    visibility: "visible",
+    opacity: 0,
+    scale: 80,
+    repeat: 3,
+    repeatDelay: 1.4,
+    onStart: () => startLoveFireworks()
+  },
+  0.3,
+  "+=1"
+)
+
     .to(".six", 0.5, {
         opacity: 0,
         y: 30,
@@ -307,5 +322,40 @@ const heartContainer = document.querySelector('.heart-container');
     }, 8000);
   }
 
-  setInterval(createFallingText, 400);
-  
+  function startLoveFireworks() {
+  const container = document.querySelector('.love-fireworks-container');
+  const loveTypes = ['❤️', '💖', '💘', '💝', '💞', '💓'];
+
+  let count = 0;
+  const maxRepeat = 5;
+
+  const interval = setInterval(() => {
+    const originX = Math.random() * window.innerWidth;
+    const originY = Math.random() * window.innerHeight;
+
+    for (let i = 0; i < 20; i++) {
+      const span = document.createElement('span');
+      span.classList.add('love-particle');
+
+      // Ambil love acak
+      span.textContent = loveTypes[Math.floor(Math.random() * loveTypes.length)];
+
+      // Posisi acak untuk ledakan
+      const dx = (Math.random() - 0.5) * 200 + 'px';
+      const dy = (Math.random() - 0.5) * 200 + 'px';
+
+      span.style.left = originX + 'px';
+      span.style.top = originY + 'px';
+      span.style.setProperty('--dx', dx);
+      span.style.setProperty('--dy', dy);
+
+      container.appendChild(span);
+
+      // Hapus partikel setelah selesai
+      setTimeout(() => span.remove(), 1000);
+    }
+
+    count++;
+    if (count >= maxRepeat) clearInterval(interval);
+  }, 1000);
+}
