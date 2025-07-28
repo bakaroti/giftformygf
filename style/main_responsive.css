@@ -411,28 +411,42 @@ html, body {
 
 .falling-text {
   position: absolute;
-  font-size: 20px;
+  top: -50px;
   font-weight: bold;
-  color: #ff69b4; /* Warna pink */
-  text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493;
-  animation: fall-text 8s linear infinite;
+  font-family: 'Segoe UI', sans-serif;
+  color: #ffc0cb;
   white-space: nowrap;
-  opacity: 0.05; /* Sangat transparan */
-  pointer-events: none; /* Supaya tidak mengganggu klik */
-  z-index: 1;
+  pointer-events: none;
+  text-shadow: 0 0 5px #ffb6c1, 0 0 10px #ff69b4, 0 0 15px #ff1493;
+
+  animation: fallSway var(--duration, 7s) ease-in-out forwards;
+  transform: rotate(var(--rotate)) skewX(var(--skew));
+  opacity: 0;
 }
 
-
-@keyframes fall-text {
+@keyframes fallSway {
   0% {
-    transform: translateY(-100px);
+    transform: translateX(0) translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
     opacity: 1;
   }
+  25% {
+    transform: translateX(-20px) translateY(25vh) rotate(-5deg);
+  }
+  50% {
+    transform: translateX(20px) translateY(50vh) rotate(10deg);
+  }
+  75% {
+    transform: translateX(-10px) translateY(75vh) rotate(-15deg);
+  }
   100% {
-    transform: translateY(110vh);
+    transform: translateX(15px) translateY(100vh) rotate(0deg);
     opacity: 0;
   }
 }
+
 
 .four {
   display: flex;
@@ -580,26 +594,30 @@ html, body {
 
 .love-fireworks-container {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
-  z-index: 9999;
   overflow: hidden;
+  z-index: 9999;
 }
 
 .love-particle {
   position: absolute;
-  font-size: 20px;
   animation: explode 1s ease-out forwards;
-  transform: translate(-50%, -50%);
+  opacity: 1;
+  will-change: transform;
 }
 
 @keyframes explode {
   0% {
+    transform: translate(0, 0) scale(1);
     opacity: 1;
-    transform: scale(1) translate(0, 0);
   }
   100% {
+    transform: translate(var(--dx), var(--dy)) scale(0.3);
     opacity: 0;
-    transform: scale(1.5) translate(var(--dx), var(--dy));
   }
 }
+

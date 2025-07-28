@@ -330,60 +330,83 @@ const heartContainer = document.querySelector('.heart-container');
   }
 
 setInterval(createHeart, 300);
-    const textContainer = document.querySelector('.falling-text-container');
-  const texts = ['lav uu', 'sayangku', 'cintaku'];
 
-  function createFallingText() {
+const textContainer = document.querySelector('.falling-text-container');
+const texts = ['lav uu', 'sayangku', 'cintaku'];
+
+function createFallingText() {
   const span = document.createElement('span');
   span.classList.add('falling-text');
   span.innerText = texts[Math.floor(Math.random() * texts.length)];
+
+  // Style acak biar beda-beda tiap elemen
+  const fontSize = (Math.random() * 10 + 18) + 'px';
+  const duration = (Math.random() * 3 + 6) + 's';
+  const rotate = (Math.random() * 30 - 15) + 'deg';
+  const skew = (Math.random() * 10 - 5) + 'deg';
+
   span.style.left = Math.random() * 100 + 'vw';
-  span.style.fontSize = (Math.random() * 10 + 18) + 'px';
-  span.style.animationDuration = (Math.random() * 3 + 6) + 's';
+  span.style.fontSize = fontSize;
+  span.style.setProperty('--duration', duration);
+  span.style.setProperty('--rotate', rotate);
+  span.style.setProperty('--skew', skew);
+
   textContainer.appendChild(span);
 
   setTimeout(() => {
     span.remove();
-  }, 8000);
+  }, parseFloat(duration) * 1000 + 2000); // buffer agar nggak hilang terlalu cepat
 }
-// 🔥 Tambahkan baris ini:
+
 setInterval(createFallingText, 400);
+
 
 
   function startLoveFireworks() {
   const container = document.querySelector('.love-fireworks-container');
-  const loveTypes = ['❤️', '💖', '💘', '💝', '💞', '💓'];
+  const loveTypes = ['❤️', '💖', '💘', '💝', '💞', '💓', '💕', '💗'];
 
-  let count = 0;
-  const maxRepeat = 5;
-
-  const interval = setInterval(() => {
-    const originX = Math.random() * window.innerWidth;
-    const originY = Math.random() * window.innerHeight;
-
-    for (let i = 0; i < 20; i++) {
+  function createExplosion(x, y) {
+    for (let i = 0; i < 25; i++) {
       const span = document.createElement('span');
       span.classList.add('love-particle');
-
-      // Ambil love acak
       span.textContent = loveTypes[Math.floor(Math.random() * loveTypes.length)];
 
-      // Posisi acak untuk ledakan
-      const dx = (Math.random() - 0.5) * 200 + 'px';
-      const dy = (Math.random() - 0.5) * 200 + 'px';
+      const dx = (Math.random() - 0.5) * 300 + 'px';
+      const dy = (Math.random() - 0.5) * 300 + 'px';
+      const fontSize = Math.random() * 18 + 20 + 'px';
 
-      span.style.left = originX + 'px';
-      span.style.top = originY + 'px';
+      span.style.left = x + 'px';
+      span.style.top = y + 'px';
       span.style.setProperty('--dx', dx);
       span.style.setProperty('--dy', dy);
+      span.style.fontSize = fontSize;
 
       container.appendChild(span);
-
-      // Hapus partikel setelah selesai
-      setTimeout(() => span.remove(), 1000);
+      setTimeout(() => span.remove(), 1500);
     }
+  }
 
+  let count = 0;
+  const maxCount = 15; // total ledakan
+  const delayRange = [300, 1200]; // min-max delay antar ledakan
+
+  function randomDelay(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  function triggerNextFirework() {
+    if (count >= maxCount) return;
+
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight * 0.6;
+    createExplosion(x, y);
     count++;
-    if (count >= maxRepeat) clearInterval(interval);
-  }, 1000);
+
+    // jeda random antar ledakan (kayak asli)
+    setTimeout(triggerNextFirework, randomDelay(...delayRange));
+  }
+
+  triggerNextFirework(); // mulai ledakan
 }
+
