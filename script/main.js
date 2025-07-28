@@ -1,4 +1,4 @@
-// trigger to play music in the background with sweetalert
+// Stay awake + fullscreen + animasi trigger
 window.addEventListener('load', () => {
   Swal.fire({
     title: 'Mau denger musiknya di latar belakang?',
@@ -11,25 +11,50 @@ window.addEventListener('load', () => {
     cancelButtonColor: '#9e9e9e',
     confirmButtonText: 'Putar Musik',
     cancelButtonText: 'Tanpa Musik',
-  }).then((result) => {
-    // >>> MASUKIN FULLSCREEN DI SINI
+  }).then(async (result) => {
+    // 🔁 Fullscreen
     const el = document.documentElement;
     if (el.requestFullscreen) {
-      el.requestFullscreen();
+      await el.requestFullscreen();
     } else if (el.webkitRequestFullscreen) {
-      el.webkitRequestFullscreen();
+      await el.webkitRequestFullscreen();
     } else if (el.msRequestFullscreen) {
-      el.msRequestFullscreen();
+      await el.msRequestFullscreen();
     }
 
-    // >>> JALANKAN MUSIK & ANIMASI
+    // 🔒 Wake Lock (stay awake di mobile)
+    let wakeLock = null;
+    async function requestWakeLock() {
+      try {
+        wakeLock = await navigator.wakeLock.request('screen');
+        wakeLock.addEventListener('release', () => {
+          console.log('🔓 Wake Lock released');
+        });
+        console.log('🔒 Wake Lock active');
+      } catch (err) {
+        console.error(`${err.name}, ${err.message}`);
+      }
+    }
+
+    await requestWakeLock();
+
+    // 🔁 If screen turns off and on again
+    document.addEventListener('visibilitychange', async () => {
+      if (wakeLock !== null && document.visibilityState === 'visible') {
+        await requestWakeLock();
+      }
+    });
+
+    // 🔊 Play music if confirmed
     if (result.isConfirmed) {
-      document.querySelector('.song').play();
+      document.querySelector('.song')?.play();
     }
 
+    // 🚀 Start animation
     animationTimeline();
   });
 });
+
 
 
 
