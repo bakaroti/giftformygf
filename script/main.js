@@ -304,7 +304,7 @@ const heartContainer = document.querySelector('.heart-container');
     }, 7000);
   }
 
-  setInterval(createHeart, 300);
+setInterval(createHeart, 300);
     const textContainer = document.querySelector('.falling-text-container');
   const texts = ['lav uu', 'sayangku', 'cintaku'];
 
@@ -321,7 +321,6 @@ const heartContainer = document.querySelector('.heart-container');
     span.remove();
   }, 8000);
 }
-
 // 🔥 Tambahkan baris ini:
 setInterval(createFallingText, 400);
 
