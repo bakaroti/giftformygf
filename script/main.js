@@ -309,18 +309,22 @@ const heartContainer = document.querySelector('.heart-container');
   const texts = ['lav uu', 'sayangku', 'cintaku'];
 
   function createFallingText() {
-    const span = document.createElement('span');
-    span.classList.add('falling-text');
-    span.innerText = texts[Math.floor(Math.random() * texts.length)];
-    span.style.left = Math.random() * 100 + 'vw';
-    span.style.fontSize = (Math.random() * 10 + 18) + 'px';
-    span.style.animationDuration = (Math.random() * 3 + 6) + 's';
-    textContainer.appendChild(span);
+  const span = document.createElement('span');
+  span.classList.add('falling-text');
+  span.innerText = texts[Math.floor(Math.random() * texts.length)];
+  span.style.left = Math.random() * 100 + 'vw';
+  span.style.fontSize = (Math.random() * 10 + 18) + 'px';
+  span.style.animationDuration = (Math.random() * 3 + 6) + 's';
+  textContainer.appendChild(span);
 
-    setTimeout(() => {
-      span.remove();
-    }, 8000);
-  }
+  setTimeout(() => {
+    span.remove();
+  }, 8000);
+}
+
+// 🔥 Tambahkan baris ini:
+setInterval(createFallingText, 400);
+
 
   function startLoveFireworks() {
   const container = document.querySelector('.love-fireworks-container');
